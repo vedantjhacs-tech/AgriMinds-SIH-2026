@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MSP Rates & Calculator - AgriMinds</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#1B5E20',
+                        agriGold: '#D4AF37',
+                        agriDark: '#2C3E50',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .goog-te-combo {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            font-size: 14px;
+            color: #334155;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .goog-te-combo:hover {
+            border-color: #94a3b8;
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+    </style>
+</head>
+
+
+<body class="bg-gray-50 text-agriDark font-sans antialiased">
+
+
+    <!-- ================= NAVIGATION BAR ================= -->
+
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+            <!-- Logo / Brand -->
+
+            <div class="flex items-center space-x-3">
+
+                <img src="logo.png"
+                     alt="AgriMinds Logo"
+                     class="h-12 w-12 object-contain rounded-full shadow-sm">
+
+                <span class="text-2xl font-black text-agriGreen tracking-tight">
+                    Agri<span class="text-agriGold">Minds</span>
+                </span>
+
+            </div>
+
+
+            <!-- Google Language Selector -->
+
+            <div id="google_translate_element"
+                 style="display: inline-block; margin-left: auto; margin-right: 15px;">
+            </div>
+
+
+            <!-- Navigation Links -->
+
+            <div class="hidden md:flex space-x-6 font-semibold text-sm">
+
+                <a href="index.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Home
+                </a>
+
+                <a href="login.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Login / Register
+                </a>
+
+                <a href="slot.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Book Slot
+                </a>
+
+                <a href="queue.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Live Queue
+                </a>
+
+                <a href="history.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    My Bookings
+                </a>
+
+                <a href="msp.html"
+                   class="text-agriGreen border-b-2 border-agriGreen pb-1">
+                    MSP Calculator
+                </a>
+
+                <a href="MarketPlace.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Marketplace
+                </a>
+
+                <a href="about.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    About Us
+                </a>
+
+                <a href="contact.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN SECTION ================= -->
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 mb-8">
+
+            <!-- Government Badge -->
+
+            <span class="bg-yellow-100 text-yellow-800 text-xs font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                Government MSP
+            </span>
+
+
+            <!-- Heading -->
+
+            <h2 class="text-3xl font-black text-agriDark mt-3 mb-2">
+                Live MSP Rates (2026-27)
+            </h2>
+
+            <p class="text-gray-500 text-sm mb-6">
+                Guaranteed Minimum Support Prices announced for procurement.
+            </p>
+
+
+
+            <!-- ================= RATES TABLE / CARDS ================= -->
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+
+
+                <!-- WHEAT -->
+
+                <div class="bg-gray-50 p-4 rounded-2xl border text-center">
+
+                    <span class="text-sm font-bold text-gray-500">
+                        Wheat (गेहूँ)
+                    </span>
+
+                    <span class="text-xl font-black text-agriGreen block mt-1">
+                        ₹2,425 / Qtl
+                    </span>
+
+                </div>
+
+
+
+                <!-- PADDY -->
+
+                <div class="bg-gray-50 p-4 rounded-2xl border text-center">
+
+                    <span class="text-sm font-bold text-gray-500">
+                        Paddy (धान)
+                    </span>
+
+                    <span class="text-xl font-black text-agriGreen block mt-1">
+                        ₹2,300 / Qtl
+                    </span>
+
+                </div>
+
+
+
+                <!-- MUSTARD -->
+
+                <div class="bg-gray-50 p-4 rounded-2xl border text-center">
+
+                    <span class="text-sm font-bold text-gray-500">
+                        Mustard (सरसों)
+                    </span>
+
+                    <span class="text-xl font-black text-agriGreen block mt-1">
+                        ₹5,650 / Qtl
+                    </span>
+
+                </div>
+
+
+
+                <!-- BAJRA -->
+
+                <div class="bg-gray-50 p-4 rounded-2xl border text-center">
+
+                    <span class="text-sm font-bold text-gray-500">
+                        Bajra (बाजरा)
+                    </span>
+
+                    <span class="text-xl font-black text-agriGreen block mt-1">
+                        ₹2,625 / Qtl
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= MSP EARNINGS CALCULATOR ================= -->
+
+            <div class="bg-green-50 p-6 rounded-2xl border border-green-200">
+
+                <h3 class="text-xl font-bold text-agriGreen mb-4">
+                    Crop Earnings Calculator
+                </h3>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+
+                    <!-- ================= SELECT CROP ================= -->
+
+                    <div>
+
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">
+                            Select Crop
+                        </label>
+
+                        <select
+                            id="calcCrop"
+                            class="w-full px-4 py-3 border rounded-xl bg-white outline-none focus:ring-2 focus:ring-agriGreen">
+
+                            <option value="2425">
+                                Wheat (गेहूँ) - ₹2,425/Qtl
+                            </option>
+
+                            <option value="2300">
+                                Paddy / Rice (धान) - ₹2,300/Qtl
+                            </option>
+
+                            <option value="5650">
+                                Mustard (सरसों) - ₹5,650/Qtl
+                            </option>
+
+                            <option value="2625">
+                                Bajra (बाजरा) - ₹2,625/Qtl
+                            </option>
+
+                            <option value="2400">
+                                Maize (मक्का) - ₹2,400/Qtl
+                            </option>
+
+                            <option value="1980">
+                                Barley (जौ) - ₹1,980/Qtl
+                            </option>
+
+                            <option value="5650">
+                                Gram / Chana (चना) - ₹5,650/Qtl
+                            </option>
+
+                            <option value="7521">
+                                Cotton (कपास) - ₹7,521/Qtl
+                            </option>
+
+                            <option value="355">
+                                Sugarcane (गन्ना) - ₹355/Qtl
+                            </option>
+
+                            <option value="6783">
+                                Groundnut (मूंगफली) - ₹6,783/Qtl
+                            </option>
+
+                            <option value="5328">
+                                Soybean (सोयाबीन) - ₹5,328/Qtl
+                            </option>
+
+                            <option value="7721">
+                                Sunflower (सूरजमुखी) - ₹7,721/Qtl
+                            </option>
+
+                            <option value="1700">
+                                Potato (आलू) - ₹1,700/Qtl
+                            </option>
+
+                            <option value="2000">
+                                Tomato (टमाटर) - ₹2,000/Qtl
+                            </option>
+
+                            <option value="2400">
+                                Onion (प्याज) - ₹2,400/Qtl
+                            </option>
+
+                            <option value="2500">
+                                Peas (मटर) - ₹2,500/Qtl
+                            </option>
+
+                            <option value="2500">
+                                Barseem (बरसीम) - ₹2,500/Qtl
+                            </option>
+
+                            <option value="8635">
+                                Sesame (तिल) - ₹8,635/Qtl
+                            </option>
+
+                            <option value="3371">
+                                Sorghum / Jowar (ज्वार) - ₹3,371/Qtl
+                            </option>
+
+                            <option value="6700">
+                                Lentil / Masoor (मसूर) - ₹6,700/Qtl
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- ================= QUANTITY ================= -->
+
+                    <div>
+
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">
+                            Quantity (Quintals)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="calcQty"
+                            min="1"
+                            placeholder="e.g. 40"
+                            class="w-full px-4 py-3 border rounded-xl bg-white outline-none focus:ring-2 focus:ring-agriGreen">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= CALCULATE BUTTON ================= -->
+
+                <button
+                    onclick="calculateEarnings()"
+                    class="w-full bg-agriGreen text-white font-bold py-3 rounded-xl hover:bg-green-700 transition mt-4">
+
+                    Calculate Estimated Earnings
+
+                </button>
+
+
+
+                <!-- ================= RESULT BOX ================= -->
+
+                <div
+                    id="resultBox"
+                    class="hidden mt-6 p-4 bg-white rounded-xl border border-green-300 text-center">
+
+                    <span class="text-xs font-bold text-gray-400 uppercase">
+                        Estimated Direct Bank Transfer
+                    </span>
+
+                    <span
+                        id="payoutAmount"
+                        class="text-3xl font-black text-agriGold mt-1 block">
+                        ₹0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= SCRIPT LOGIC ================= -->
+
+    <script>
+
+        function calculateEarnings() {
+
+            const rate =
+                parseFloat(document.getElementById("calcCrop").value);
+
+            const qty =
+                parseFloat(document.getElementById("calcQty").value);
+
+
+            /* ================= VALIDATION ================= */
+
+            if (!qty || qty <= 0) {
+
+                alert("Please enter a valid quantity in quintals!");
+
+                return;
+
+            }
+
+
+            /* ================= CALCULATE TOTAL ================= */
+
+            const total = rate * qty;
+
+
+            /* ================= DISPLAY RESULT ================= */
+
+            document.getElementById("payoutAmount").innerText =
+                "₹" + total.toLocaleString('en-IN');
+
+
+            document.getElementById("resultBox")
+                .classList.remove("hidden");
+
+        }
+
+    </script>
+
+
+
+    <!-- ================= GOOGLE TRANSLATE SCRIPT ================= -->
+
+    <script type="text/javascript">
+
+        function googleTranslateElementInit() {
+
+            new google.translate.TranslateElement({
+
+                pageLanguage: 'en',
+
+                includedLanguages:
+                    'hi,pa,gu,mr,bn,ta,te,ml,kn,or,ur,as,en',
+
+                layout:
+                    google.translate.TranslateElement.InlineLayout.SIMPLE,
+
+                autoDisplay: false
+
+            }, 'google_translate_element');
+
+        }
+
+    </script>
+
+
+    <script
+        type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
+
+</body>
+
+</html>

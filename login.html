@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Login & Register - AgriMinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#1B5E20',
+                        agriGold: '#D4AF37',
+                        agriDark: '#2C3E50',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .goog-te-combo {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            font-size: 14px;
+            color: #334155;
+            outline: none;
+            cursor: pointer;
+        }
+        .goog-te-combo:hover {
+            border-color: #94a3b8;
+        }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget { color: transparent !important; }
+    </style>
+</head>
+<body class="bg-gray-50 text-agriDark font-sans antialiased">
+
+    <!-- Top Notice Bar -->
+    <div class="bg-agriDark text-white text-xs py-2 px-4 text-center font-medium">
+        🛡️ Official Government Procurement Initiative | Smart India Hackathon 2026 Prototype
+    </div>
+
+    <!-- Navigation Bar with Logo -->
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="AgriMinds Logo" class="h-12 w-12 object-contain rounded-full shadow-sm">
+                <span class="text-2xl font-black text-agriGreen tracking-tight">Agri<span class="text-agriGold">Minds</span></span>
+            </div>
+
+            <!-- Language Selector Dropdown -->
+            <div id="google_translate_element" style="display: inline-block; margin-left: auto; margin-right: 15px;"></div>
+
+            <div class="hidden md:flex space-x-6 font-semibold text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-agriGreen transition">Home</a>
+                <a href="login.html" class="text-agriGreen border-b-2 border-agriGreen pb-1">Login / Register</a>
+                <a href="slot.html" class="text-gray-600 hover:text-agriGreen transition">Book Slot</a>
+                <a href="queue.html" class="text-gray-600 hover:text-agriGreen transition">Live Queue</a>
+                <a href="history.html" class="text-gray-600 hover:text-agriGreen transition">My Bookings</a>
+                <a href="msp.html" class="text-gray-600 hover:text-agriGreen transition">MSP Calculator</a>
+                <a href="MarketPlace.html" class="text-gray-600 hover:text-agriGreen transition">Marketplace</a>
+                <a href="about.html" class="text-gray-600 hover:text-agriGreen transition">About Us</a>
+                <a href="contact.html" class="text-gray-600 hover:text-agriGreen transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Auth Card Section -->
+    <div class="max-w-md mx-auto px-4 py-12">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100">
+            <div class="flex border-b border-gray-200 mb-6">
+                <button id="tabLogin" onclick="switchTab('login')" class="flex-1 pb-3 font-bold text-agriGreen border-b-2 border-agriGreen text-center">Login</button>
+                <button id="tabRegister" onclick="switchTab('register')" class="flex-1 pb-3 font-semibold text-gray-400 text-center">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="formLogin">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Mobile Number</label>
+                        <input type="text" id="loginPhone" placeholder="Enter 10-digit mobile number" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+                    </div>
+                    <button onclick="sendOTP('login')" class="w-full bg-agriGreen text-white font-bold py-3 rounded-xl hover:bg-green-700 transition">Get OTP</button>
+
+                    <div id="otpSectionLogin" class="hidden space-y-4 pt-2">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Enter OTP (Simulated: 1234)</label>
+                            <input type="text" id="loginOtp" placeholder="Enter 4-digit OTP" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+                        </div>
+                        <button onclick="verifyLogin()" class="w-full bg-agriGold text-agriDark font-bold py-3 rounded-xl hover:bg-yellow-500 transition">Verify & Login</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Form with OTP -->
+            <div id="formRegister" class="hidden">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter farmer name" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Mobile Number</label>
+                        <input type="text" id="regPhone" placeholder="Enter mobile number" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Procurement District / Mandi</label>
+                        <input type="text" id="regDistrict" placeholder="e.g. Karnal Mandi #4" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+                    </div>
+                    <button onclick="sendOTP('register')" class="w-full bg-agriGreen text-white font-bold py-3 rounded-xl hover:bg-green-700 transition">Get OTP</button>
+
+                    <div id="otpSectionRegister" class="hidden space-y-4 pt-2">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Enter OTP (Simulated: 1234)</label>
+                            <input type="text" id="regOtp" placeholder="Enter 4-digit OTP" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+                        </div>
+                        <button onclick="verifyRegister()" class="w-full bg-agriGold text-agriDark font-bold py-3 rounded-xl hover:bg-yellow-500 transition">Verify & Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function switchTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('formLogin').classList.remove('hidden');
+                document.getElementById('formRegister').classList.add('hidden');
+                document.getElementById('tabLogin').className = "flex-1 pb-3 font-bold text-agriGreen border-b-2 border-agriGreen text-center";
+                document.getElementById('tabRegister').className = "flex-1 pb-3 font-semibold text-gray-400 text-center";
+            } else {
+                document.getElementById('formLogin').classList.add('hidden');
+                document.getElementById('formRegister').classList.remove('hidden');
+                document.getElementById('tabRegister').className = "flex-1 pb-3 font-bold text-agriGreen border-b-2 border-agriGreen text-center";
+                document.getElementById('tabLogin').className = "flex-1 pb-3 font-semibold text-gray-400 text-center";
+            }
+        }
+
+        function sendOTP(type) {
+            let phone = type === 'login' ? document.getElementById('loginPhone').value : document.getElementById('regPhone').value;
+            
+            if (type === 'register') {
+                const name = document.getElementById('regName').value;
+                const district = document.getElementById('regDistrict').value;
+                if (!name || !district) {
+                    alert("Please fill name and district before sending OTP");
+                    return;
+                }
+            }
+
+            if (phone.length < 10) {
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            alert("Simulated SMS OTP sent to +91 " + phone + "\n(Use OTP: 1234)");
+
+            if (type === 'login') {
+                document.getElementById('otpSectionLogin').classList.remove('hidden');
+            } else {
+                document.getElementById('otpSectionRegister').classList.remove('hidden');
+            }
+        }
+
+        function verifyLogin() {
+            const otp = document.getElementById('loginOtp').value;
+            const phone = document.getElementById('loginPhone').value;
+            if (otp === "1234") {
+                localStorage.setItem("agriUserPhone", phone);
+                localStorage.setItem("agriUserName", "Verified Farmer (" + phone.slice(-4) + ")");
+                alert("Login Successfull! Redirecting to secure slot booking...");
+                window.location.href = "slot.html";
+            } else {
+                alert("❌ Incorrect OTP. Please enter '1234' for this demo.");
+            }
+        }
+
+        function verifyRegister() {
+            const otp = document.getElementById('regOtp').value;
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+            const district = document.getElementById('regDistrict').value;
+
+            if (otp === "1234") {
+                localStorage.setItem("agriUserPhone", phone);
+                localStorage.setItem("agriUserName", name);
+                localStorage.setItem("agriUserDistrict", district);
+                
+                alert("Registration & OTP Verification Successfull! Welcome, " + name + ".\nRedirecting to slot booking...");
+                window.location.href = "slot.html";
+            } else {
+                alert("❌ Incorrect OTP. Please enter '1234' for this demo.");
+            }
+        }
+    </script>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,pa,gu,mr,bn,ta,te,ml,kn,or,ur,as,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

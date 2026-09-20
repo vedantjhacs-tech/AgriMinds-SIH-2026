@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Slot Booking - AgriMinds</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#1B5E20',
+                        agriGold: '#D4AF37',
+                        agriDark: '#2C3E50',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .goog-te-combo {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            font-size: 14px;
+            color: #334155;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .goog-te-combo:hover {
+            border-color: #94a3b8;
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+    </style>
+</head>
+
+
+<body class="bg-gray-50 text-agriDark font-sans antialiased">
+
+
+    <!-- ================= SECURITY CHECK ================= -->
+
+    <script>
+        const userPhone = localStorage.getItem("agriUserPhone");
+
+        if (!userPhone) {
+            alert("⚠️ Security Alert: Unauthorized access detected! Please login or register first.");
+            window.location.href = "login.html";
+        }
+    </script>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+            <!-- Logo / Brand -->
+
+            <div class="flex items-center space-x-3">
+
+                <img src="logo.png"
+                     alt="AgriMinds Logo"
+                     class="h-12 w-12 object-contain rounded-full shadow-sm">
+
+                <span class="text-2xl font-black text-agriGreen tracking-tight">
+                    Agri<span class="text-agriGold">Minds</span>
+                </span>
+
+            </div>
+
+
+            <!-- Google Language Selector -->
+
+            <div id="google_translate_element"
+                 style="display: inline-block; margin-left: auto; margin-right: 15px;">
+            </div>
+
+
+            <!-- Navigation Links -->
+
+            <div class="hidden md:flex space-x-6 font-semibold text-sm">
+
+                <a href="index.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Home
+                </a>
+
+                <a href="login.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Login / Register
+                </a>
+
+                <a href="slot.html"
+                   class="text-agriGreen border-b-2 border-agriGreen pb-1">
+                    Book Slot
+                </a>
+
+                <a href="queue.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Live Queue
+                </a>
+
+                <a href="history.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    My Bookings
+                </a>
+
+                <a href="msp.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    MSP Calculator
+                </a>
+
+                <a href="MarketPlace.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Marketplace
+                </a>
+
+                <a href="about.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    About Us
+                </a>
+
+                <a href="contact.html"
+                   class="text-gray-600 hover:text-agriGreen transition">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <!-- User / Logout -->
+
+            <div>
+
+                <span id="welcomeUser"
+                      class="text-xs font-bold bg-green-50 text-agriGreen px-3 py-1.5 rounded-full border border-green-200">
+                </span>
+
+                <button onclick="logout()"
+                        class="ml-3 text-xs text-red-600 font-bold hover:underline">
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= BOOKING SECTION ================= -->
+
+    <div class="max-w-2xl mx-auto px-4 py-12">
+
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100">
+
+            <h2 class="text-2xl font-black text-agriDark mb-2">
+                Book Your Procurement Slot
+            </h2>
+
+            <p class="text-gray-500 text-sm mb-6">
+                Select your preferred date, mandi/procurement centre,
+                time, crop and quantity for hassle-free direct entry.
+            </p>
+
+
+            <div class="space-y-4">
+
+
+                <!-- ================= CROP ================= -->
+
+                <div>
+
+                    <label
+                        class="block text-xs font-bold uppercase text-gray-500 mb-1">
+                        Select Crop Type
+                    </label>
+
+                    <select
+                        id="cropType"
+                        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+
+                        <option value="">Select Crop</option>
+
+                        <option>Wheat (गेहूँ) - Grade A</option>
+
+                        <option>Paddy / Rice (धान)</option>
+
+                        <option>Mustard (सरसों)</option>
+
+                        <option>Bajra (बाजरा)</option>
+
+                        <option>Maize (मक्का)</option>
+
+                        <option>Barley (जौ)</option>
+
+                        <option>Gram / Chana (चना)</option>
+
+                        <option>Cotton (कपास)</option>
+
+                        <option>Sugarcane (गन्ना)</option>
+
+                        <option>Groundnut (मूंगफली)</option>
+
+                        <option>Soybean (सोयाबीन)</option>
+
+                        <option>Sunflower (सूरजमुखी)</option>
+
+                        <option>Potato (आलू)</option>
+
+                        <option>Tomato (टमाटर)</option>
+
+                        <option>Onion (प्याज)</option>
+
+                        <option>Peas (मटर)</option>
+
+                        <option>Barseem (बरसीम)</option>
+
+                        <option>Sesame (तिल)</option>
+
+                        <option>Sorghum / Jowar (ज्वार)</option>
+
+                        <option>Lentil / Masoor (मसूर)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ================= DATE + TIME ================= -->
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+
+                    <!-- DATE -->
+
+                    <div>
+
+                        <label
+                            class="block text-xs font-bold uppercase text-gray-500 mb-1">
+                            Slot Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="slotDate"
+                            class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+
+                    </div>
+
+
+                    <!-- TIME -->
+
+                    <div>
+
+                        <label
+                            class="block text-xs font-bold uppercase text-gray-500 mb-1">
+                            Time Window
+                        </label>
+
+                        <select
+                            id="slotTime"
+                            class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+
+                            <option value="">Select Time</option>
+
+                            <option>
+                                09:00 AM - 11:00 AM (Morning Batch)
+                            </option>
+
+                            <option>
+                                11:30 AM - 01:30 PM (Mid-Day Batch)
+                            </option>
+
+                            <option>
+                                03:00 PM - 05:00 PM (Evening Batch)
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= MANDI / PROCUREMENT CENTRE ================= -->
+
+                <div>
+
+                    <label
+                        class="block text-xs font-bold uppercase text-gray-500 mb-1">
+
+                        Select Mandi / Procurement Centre
+
+                    </label>
+
+
+                    <select
+                        id="mandi"
+                        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+
+                        <option value="">
+                            Select Mandi / Procurement Centre
+                        </option>
+
+                        <option>
+                            Panchkula Grain Market
+                        </option>
+
+                        <option>
+                            Kalka Procurement Centre
+                        </option>
+
+                        <option>
+                            Pinjore Procurement Centre
+                        </option>
+
+                        <option>
+                            Ambala Grain Market
+                        </option>
+
+                        <option>
+                            Chandigarh Grain Market
+                        </option>
+
+                        <option>
+                            Barwala Mandi
+                        </option>
+
+                        <option>
+                            Raipur Rani Mandi
+                        </option>
+
+                        <option>
+                            Naraingarh Mandi
+                        </option>
+
+                        <option>
+                            Shahabad Mandi
+                        </option>
+
+                        <option>
+                            Pehowa Mandi
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ================= QUANTITY ================= -->
+
+                <div>
+
+                    <label
+                        class="block text-xs font-bold uppercase text-gray-500 mb-1">
+
+                        Quantity (in Quintals)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="cropQty"
+                        min="1"
+                        placeholder="e.g. 50"
+                        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-agriGreen outline-none">
+
+                </div>
+
+
+
+                <!-- ================= BOOK BUTTON ================= -->
+
+                <button
+                    onclick="bookSlot()"
+                    class="w-full bg-agriGreen text-white font-bold py-3.5 rounded-xl hover:bg-green-700 transition">
+
+                    Book Procurement Slot
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= MAIN JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= USER NAME ================= */
+
+        const userName =
+            localStorage.getItem("agriUserName") || "Farmer";
+
+        document.getElementById("welcomeUser").innerText =
+            "👤 " + userName;
+
+
+
+        /* ================= BOOK SLOT FUNCTION ================= */
+
+        function bookSlot() {
+
+
+            /* Get selected values */
+
+            const crop =
+                document.getElementById("cropType").value;
+
+            const date =
+                document.getElementById("slotDate").value;
+
+            const time =
+                document.getElementById("slotTime").value;
+
+            const mandi =
+                document.getElementById("mandi").value;
+
+            const qty =
+                document.getElementById("cropQty").value;
+
+
+
+            /* ================= VALIDATION ================= */
+
+            if (!crop || !date || !time || !mandi || !qty) {
+
+                alert(
+                    "Please select crop, date, mandi/procurement centre, time and enter quantity."
+                );
+
+                return;
+            }
+
+
+            /* Quantity must be greater than zero */
+
+            if (Number(qty) <= 0) {
+
+                alert("Please enter a valid quantity greater than 0.");
+
+                return;
+            }
+
+
+
+            /* ================= TOKEN GENERATION ================= */
+
+            const tokenNumber =
+                "AGRI-2026-" +
+                Math.floor(1000 + Math.random() * 9000);
+
+
+
+            /* ================= GET OLD BOOKINGS ================= */
+
+            let bookings =
+                JSON.parse(
+                    localStorage.getItem("agriBookings")
+                ) || [];
+
+
+
+            /* ================= SAVE NEW BOOKING ================= */
+
+            bookings.push({
+
+                token: tokenNumber,
+
+                crop: crop,
+
+                date: date,
+
+                time: time,
+
+                mandi: mandi,
+
+                qty: qty,
+
+                status: "Confirmed & Active"
+
+            });
+
+
+
+            /* ================= SAVE TO LOCAL STORAGE ================= */
+
+            localStorage.setItem(
+                "agriBookings",
+                JSON.stringify(bookings)
+            );
+
+
+            localStorage.setItem(
+                "agriToken",
+                tokenNumber
+            );
+
+
+
+            /* ================= SUCCESS POPUP ================= */
+
+            alert(
+
+                "Slot Booked Successfully!\n\n" +
+
+                "Mandi / Procurement Centre: " +
+                mandi +
+
+                "\nCrop: " +
+                crop +
+
+                "\nDate: " +
+                date +
+
+                "\nTime: " +
+                time +
+
+                "\nQuantity: " +
+                qty +
+                " Quintals" +
+
+                "\n\nToken Number: " +
+                tokenNumber +
+
+                "\n\nSMS confirmation simulated to your phone."
+
+            );
+
+
+
+            /* ================= REDIRECT ================= */
+
+            window.location.href =
+                "queue.html";
+
+        }
+
+
+
+        /* ================= LOGOUT ================= */
+
+        function logout() {
+
+            localStorage.clear();
+
+            alert("Logged out successfully.");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    </script>
+
+
+
+    <!-- ================= GOOGLE TRANSLATE ================= -->
+
+    <script type="text/javascript">
+
+        function googleTranslateElementInit() {
+
+            new google.translate.TranslateElement({
+
+                pageLanguage: 'en',
+
+                includedLanguages:
+                    'hi,pa,gu,mr,bn,ta,te,ml,kn,or,ur,as,en',
+
+                layout:
+                    google.translate.TranslateElement.InlineLayout.SIMPLE,
+
+                autoDisplay: false
+
+            }, 'google_translate_element');
+
+        }
+
+    </script>
+
+
+    <script
+        type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
+
+</body>
+
+</html>

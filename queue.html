@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Queue Tracker - AgriMinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#1B5E20',
+                        agriGold: '#D4AF37',
+                        agriDark: '#2C3E50',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .goog-te-combo {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            font-size: 14px;
+            color: #334155;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .goog-te-combo:hover {
+            border-color: #94a3b8;
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-agriDark font-sans antialiased">
+
+    <!-- ================= SECURITY CHECK ================= -->
+    <script>
+        const userPhone = localStorage.getItem("agriUserPhone");
+        if (!userPhone) {
+            alert("⚠️ Security Alert: Unauthorized access detected! Please login or register first.");
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <!-- ================= NAVIGATION BAR ================= -->
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo / Brand -->
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="AgriMinds Logo" class="h-12 w-12 object-contain rounded-full shadow-sm">
+                <span class="text-2xl font-black text-agriGreen tracking-tight">
+                    Agri<span class="text-agriGold">Minds</span>
+                </span>
+            </div>
+
+            <!-- Language Selector Dropdown -->
+            <div id="google_translate_element" style="display: inline-block; margin-left: auto; margin-right: 15px;"></div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex space-x-6 font-semibold text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-agriGreen transition">Home</a>
+                <a href="login.html" class="text-gray-600 hover:text-agriGreen transition">Login / Register</a>
+                <a href="slot.html" class="text-gray-600 hover:text-agriGreen transition">Book Slot</a>
+                <a href="queue.html" class="text-agriGreen border-b-2 border-agriGreen pb-1">Live Queue</a>
+                <a href="history.html" class="text-gray-600 hover:text-agriGreen transition">My Bookings</a>
+                <a href="msp.html" class="text-gray-600 hover:text-agriGreen transition">MSP Calculator</a>
+                <a href="MarketPlace.html" class="text-gray-600 hover:text-agriGreen transition">Marketplace</a>
+                <a href="about.html" class="text-gray-600 hover:text-agriGreen transition">About Us</a>
+                <a href="contact.html" class="text-gray-600 hover:text-agriGreen transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= MAIN QUEUE TRACKER SECTION ================= -->
+    <div class="max-w-3xl mx-auto px-4 py-12">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 text-center">
+            
+            <span class="bg-green-100 text-agriGreen text-xs font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                Real-Time Queue Tracker
+            </span>
+
+            <h2 class="text-3xl font-black text-agriDark mt-3 mb-2">Live Queue Tracker</h2>
+            <p class="text-gray-500 text-sm mb-6">Check current token being served and your queue status at your procurement centre.</p>
+
+            <!-- NO TOKEN ALERT CONTAINER -->
+            <div id="noTokenAlert" class="hidden mb-6 p-6 bg-yellow-50 border border-yellow-200 rounded-2xl text-center">
+                <p class="text-yellow-800 font-bold mb-3">⚠️ You have not booked a procurement slot yet!</p>
+                <a href="slot.html" class="inline-block bg-agriGreen text-white font-bold px-6 py-2.5 rounded-xl hover:bg-green-700 transition shadow-md">
+                    Book Procurement Slot Now
+                </a>
+            </div>
+
+            <!-- QUEUE CONTENT CONTAINER -->
+            <div id="queueContentContainer">
+
+                <!-- PROCUREMENT CENTRE SELECTOR / DISPLAY BAR -->
+                <div class="bg-green-50 p-6 rounded-2xl border border-green-200 mb-8 text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-500 block mb-1">Your Booked Centre</span>
+                            <span id="bookedCentreDisplay" class="text-lg font-black text-agriGreen">Not Available</span>
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold uppercase text-gray-500 block mb-1">View Queue For Centre</label>
+                            <select id="centreSelector" onchange="switchCentreQueue()" class="w-full px-3 py-2 border rounded-xl bg-white text-sm outline-none focus:ring-2 focus:ring-agriGreen">
+                                <option value="Panchkula Grain Market">Panchkula Grain Market</option>
+                                <option value="Kalka Procurement Centre">Kalka Procurement Centre</option>
+                                <option value="Pinjore Procurement Centre">Pinjore Procurement Centre</option>
+                                <option value="Ambala Grain Market">Ambala Grain Market</option>
+                                <option value="Chandigarh Grain Market">Chandigarh Grain Market</option>
+                                <option value="Barwala Mandi">Barwala Mandi</option>
+                                <option value="Raipur Rani Mandi">Raipur Rani Mandi</option>
+                                <option value="Naraingarh Mandi">Naraingarh Mandi</option>
+                                <option value="Shahabad Mandi">Shahabad Mandi</option>
+                                <option value="Pehowa Mandi">Pehowa Mandi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STATUS CARDS GRID -->
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="p-4 bg-white rounded-xl shadow-sm">
+                        <span class="block text-xs font-bold text-gray-400 uppercase">Current Serving Token</span>
+                        <span id="servingToken" class="text-2xl font-black text-agriGreen mt-1 block">--</span>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl shadow-sm">
+                        <span class="block text-xs font-bold text-gray-400 uppercase">Your Token Number</span>
+                        <span id="myTokenDisplay" class="text-2xl font-black text-agriGold mt-1 block">Not Booked</span>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl shadow-sm">
+                        <span class="block text-xs font-bold text-gray-400 uppercase">Estimated Wait Time</span>
+                        <span id="waitTimeDisplay" class="text-2xl font-black text-agriDark mt-1 block">--</span>
+                    </div>
+                </div>
+
+                <!-- DETAILED BOOKING & QUEUE INFO TABLE / CARD -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 text-left shadow-sm mb-8">
+                    <h3 class="text-lg font-bold text-agriDark mb-4 border-b pb-2">Booking & Centre Details</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-400 block">Farmer Position in Queue</span>
+                            <span id="queuePositionDisplay" class="font-bold text-agriDark text-base">--</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-400 block">Crop Type</span>
+                            <span id="cropDisplay" class="font-bold text-agriDark text-base">--</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-400 block">Quantity</span>
+                            <span id="qtyDisplay" class="font-bold text-agriDark text-base">--</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-400 block">Booking Date</span>
+                            <span id="dateDisplay" class="font-bold text-agriDark text-base">--</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-400 block">Time Window</span>
+                            <span id="timeDisplay" class="font-bold text-agriDark text-base">--</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase text-gray-400 block">Booking Status</span>
+                            <span id="statusDisplay" class="inline-block px-2 py-0.5 mt-1 bg-green-100 text-agriGreen rounded text-xs font-bold">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REFRESH BUTTON -->
+                <div class="mb-6">
+                    <button onclick="refreshQueueData()" class="bg-agriDark text-white font-bold px-6 py-2.5 rounded-xl hover:bg-gray-700 transition shadow-md text-sm">
+                        🔄 Refresh Queue
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <a href="slot.html" class="bg-agriGreen text-white font-bold px-6 py-3 rounded-xl hover:bg-green-700 transition shadow-md">
+                    Book Slot
+                </a>
+                <a href="history.html" class="bg-agriDark text-white font-bold px-6 py-3 rounded-xl hover:bg-gray-800 transition shadow-md">
+                    My Bookings
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= SCRIPT LOGIC ================= -->
+    <script>
+        function loadQueueData() {
+            const savedToken = localStorage.getItem("agriToken");
+            const bookings = JSON.parse(localStorage.getItem("agriBookings")) || [];
+
+            const noTokenAlert = document.getElementById("noTokenAlert");
+            const queueContentContainer = document.getElementById("queueContentContainer");
+
+            if (!savedToken || bookings.length === 0) {
+                noTokenAlert.classList.remove("hidden");
+                queueContentContainer.classList.add("hidden");
+                return;
+            }
+
+            noTokenAlert.classList.add("hidden");
+            queueContentContainer.classList.remove("hidden");
+
+            // Find current booking matching savedToken
+            let currentBooking = bookings.find(b => b.token === savedToken);
+
+            if (!currentBooking) {
+                // Fallback to the latest booking if token mismatch
+                currentBooking = bookings[bookings.length - 1];
+            }
+
+            // Display farmer token
+            document.getElementById("myTokenDisplay").innerText = currentBooking.token;
+            document.getElementById("bookedCentreDisplay").innerText = currentBooking.mandi;
+            document.getElementById("cropDisplay").innerText = currentBooking.crop;
+            document.getElementById("qtyDisplay").innerText = currentBooking.qty + " Quintals";
+            document.getElementById("dateDisplay").innerText = currentBooking.date;
+            document.getElementById("timeDisplay").innerText = currentBooking.time;
+            document.getElementById("statusDisplay").innerText = currentBooking.status;
+
+            // Set default dropdown value to booked centre
+            const centreSelector = document.getElementById("centreSelector");
+            centreSelector.value = currentBooking.mandi;
+
+            updateCentreQueueDisplay(currentBooking.mandi, currentBooking.token);
+        }
+
+        function switchCentreQueue() {
+            const selectedCentre = document.getElementById("centreSelector").value;
+            const savedToken = localStorage.getItem("agriToken");
+            updateCentreQueueDisplay(selectedCentre, savedToken);
+        }
+
+        function updateCentreQueueDisplay(centreName, userToken) {
+            // Generate a persistent/consistent simulated queue number based on centre name string length or storage
+            let centreQueues = JSON.parse(localStorage.getItem("agriCentreQueues")) || {};
+            
+            if (!centreQueues[centreName]) {
+                // Assign a realistic random active serving token number for this specific centre
+                centreQueues[centreName] = "AGRI-2026-" + Math.floor(1000 + Math.random() * 9000);
+                localStorage.setItem("agriCentreQueues", JSON.stringify(centreQueues));
+            }
+
+            const servingToken = centreQueues[centreName];
+            document.getElementById("servingToken").innerText = servingToken;
+
+            // Calculate mock position and wait time
+            const bookings = JSON.parse(localStorage.getItem("agriBookings")) || [];
+            const userBooking = bookings.find(b => b.token === userToken);
+
+            let position = 5; // Default fallback
+            if (userBooking && userBooking.mandi === centreName) {
+                // If viewing own booked centre, make position deterministic or realistic
+                position = Math.max(1, parseInt(userToken.slice(-2)) % 8);
+            } else {
+                // Random preview position for unbooked centres
+                position = Math.floor(1 + Math.random() * 10);
+            }
+
+            document.getElementById("queuePositionDisplay").innerText = position + "th in line";
+            
+            const waitTimeMinutes = position * 10;
+            document.getElementById("waitTimeDisplay").innerText = "~" + waitTimeMinutes + " mins";
+        }
+
+        function refreshQueueData() {
+            // Rotate serving token slightly for realism on refresh
+            const selectedCentre = document.getElementById("centreSelector").value;
+            let centreQueues = JSON.parse(localStorage.getItem("agriCentreQueues")) || {};
+            centreQueues[selectedCentre] = "AGRI-2026-" + Math.floor(1000 + Math.random() * 9000);
+            localStorage.setItem("agriCentreQueues", JSON.stringify(centreQueues));
+
+            loadQueueData();
+            alert("Queue data refreshed successfully for " + selectedCentre + "!");
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            loadQueueData();
+        };
+    </script>
+
+    <!-- ================= GOOGLE TRANSLATE SCRIPT ================= -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,pa,gu,mr,bn,ta,te,ml,kn,or,ur,as,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+
+</html>

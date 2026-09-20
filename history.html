@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History - AgriMinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#1B5E20',
+                        agriGold: '#D4AF37',
+                        agriDark: '#2C3E50',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .goog-te-combo {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            font-size: 14px;
+            color: #334155;
+            outline: none;
+            cursor: pointer;
+        }
+        .goog-te-combo:hover {
+            border-color: #94a3b8;
+        }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget { color: transparent !important; }
+    </style>
+</head>
+<body class="bg-gray-50 text-agriDark font-sans antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="AgriMinds Logo" class="h-12 w-12 object-contain rounded-full shadow-sm">
+                <span class="text-2xl font-black text-agriGreen tracking-tight">Agri<span class="text-agriGold">Minds</span></span>
+            </div>
+
+            <!-- Language Selector Dropdown -->
+            <div id="google_translate_element" style="display: inline-block; margin-left: auto; margin-right: 15px;"></div>
+
+            <div class="hidden md:flex space-x-6 font-semibold text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-agriGreen transition">Home</a>
+                <a href="login.html" class="text-gray-600 hover:text-agriGreen transition">Login / Register</a>
+                <a href="slot.html" class="text-gray-600 hover:text-agriGreen transition">Book Slot</a>
+                <a href="queue.html" class="text-gray-600 hover:text-agriGreen transition">Live Queue</a>
+                <a href="history.html" class="text-agriGreen border-b-2 border-agriGreen pb-1">My Bookings</a>
+                <a href="msp.html" class="text-gray-600 hover:text-agriGreen transition">MSP Calculator</a>
+                <a href="MarketPlace.html" class="text-gray-600 hover:text-agriGreen transition">Marketplace</a>
+                <a href="about.html" class="text-gray-600 hover:text-agriGreen transition">About Us</a>
+                <a href="contact.html" class="text-gray-600 hover:text-agriGreen transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100">
+            <h2 class="text-3xl font-black text-agriDark mb-2">My Booking History</h2>
+            <p class="text-gray-500 text-sm mb-6">Review your past and active procurement slots and tokens.</p>
+            
+            <div id="historyContainer" class="space-y-4">
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="slot.html" class="bg-agriGreen text-white font-bold px-8 py-3 rounded-xl hover:bg-green-700 transition shadow-md">Book New Slot</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById("historyContainer");
+        const bookings = JSON.parse(localStorage.getItem("agriBookings")) || [];
+
+        if (bookings.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+                    <p class="text-gray-500 font-medium">No booking records found.</p>
+                    <a href="slot.html" class="text-agriGreen font-bold text-sm mt-2 inline-block hover:underline">Book your first slot now</a>
+                </div>
+            `;
+        } else {
+            let htmlContent = "";
+            bookings.reverse().forEach(b => {
+                htmlContent += `
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center">
+                        <div>
+                            <span class="bg-green-100 text-agriGreen text-xs font-extrabold px-3 py-1 rounded-full">${b.token}</span>
+                            <h4 class="text-lg font-bold text-agriDark mt-2">${b.crop}</h4>
+                            <p class="text-xs text-gray-500">📅 Date: ${b.date} | ⏰ Time: ${b.time}</p>
+                            <p class="text-xs text-gray-500 mt-1">Quantity: <b>${b.qty} Quintals</b></p>
+                        </div>
+                        <div class="text-right mt-4 md:mt-0">
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-lg shadow-sm">${b.status}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = htmlContent;
+        }
+    </script>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,pa,gu,mr,bn,ta,te,ml,kn,or,ur,as,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

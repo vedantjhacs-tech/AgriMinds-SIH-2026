@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - AgriMinds Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#1B5E20',
+                        agriGold: '#D4AF37',
+                        agriDark: '#2C3E50',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-agriDark font-sans antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="AgriMinds Logo" class="h-12 w-12 object-contain rounded-full shadow-sm">
+                <span class="text-2xl font-black text-agriGreen tracking-tight">Agri<span class="text-agriGold">Minds</span></span>
+            </div>
+            
+            <div class="hidden md:flex space-x-4 font-semibold text-sm items-center">
+                <a href="index.html" class="text-gray-600 hover:text-agriGreen transition">Home</a>
+                <a href="login.html" class="text-gray-600 hover:text-agriGreen transition">Login / Register</a>
+                <a href="slot.html" class="text-gray-600 hover:text-agriGreen transition">Book Slot</a>
+                <a href="queue.html" class="text-gray-600 hover:text-agriGreen transition">Live Queue</a>
+                <a href="history.html" class="text-gray-600 hover:text-agriGreen transition">My Bookings</a>
+                <a href="msp.html" class="text-gray-600 hover:text-agriGreen transition">MSP Calculator</a>
+                <a href="Marketplace.html" class="text-agriGreen border-b-2 border-agriGreen pb-1 font-bold">Marketplace</a>
+                <a href="about.html" class="text-gray-600 hover:text-agriGreen transition">About Us</a>
+                <a href="contact.html" class="text-gray-600 hover:text-agriGreen transition">Contact</a>
+
+                <!-- Google Translate Widget for 15+ Regional Languages -->
+                <div id="google_translate_element" class="ml-2 scale-90"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Marketplace Section -->
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        
+        <!-- Header & Store Selection Banner -->
+        <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 mb-8 flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div>
+                <span class="bg-green-100 text-agriGreen text-xs font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider">Direct FPO Supply Network</span>
+                <h1 class="text-3xl md:text-4xl font-black text-agriDark mt-3">Verified Local Agri-Stores & Marketplace</h1>
+                <p class="text-gray-600 mt-2 max-w-2xl">Select your preferred nearby verified store or FPO center below to purchase high-grade seeds, certified fertilizers, and equipment with doorstep rural delivery.</p>
+            </div>
+            
+            <!-- Store Selector Dropdown (15+ Options) -->
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 w-full lg:w-80">
+                <label class="block text-xs font-bold text-gray-700 mb-1">📍 Select Verified Nearby Store / Hub:</label>
+                <select id="storeSelect" class="w-full bg-white border border-gray-300 text-gray-800 text-sm rounded-xl p-2.5 focus:ring-2 focus:ring-agriGreen focus:outline-none font-medium">
+                    <option value="Kurukshetra Mandi Hub">1. Kurukshetra Main FPO Hub</option>
+                    <option value="Karnal Agri Store">2. Karnal Cooperative Agri Store</option>
+                    <option value="Ambala Kisan Kendra">3. Ambala Kisan Seva Kendra</option>
+                    <option value="Panipat Rural Hub">4. Panipat Organic Producer Hub</option>
+                    <option value="Sonipat Agro Point">5. Sonipat Farmers Input Outlet</option>
+                    <option value="Rohtak Green Store">6. Rohtak Krishi Upaj Kendra</option>
+                    <option value="Hisar Seed Center">7. Hisar State Seed Corporation Outlet</option>
+                    <option value="Sirsa FPO Network">8. Sirsa Cooperative Society Store</option>
+                    <option value="Jind Kisan Depot">9. Jind Rural Supply Depot</option>
+                    <option value="Yamunanagar Agro Hub">10. Yamunanagar Timber & Agri Store</option>
+                    <option value="Kaithal Mandi Store">11. Kaithal District FPO Hub</option>
+                    <option value="Bhiwani Kisan Kendra">12. Bhiwani Agro Input Center</option>
+                    <option value="Fatehabad Seed Depot">13. Fatehabad Progressive Farmers Store</option>
+                    <option value="Palwal Rural Outlet">14. Palwal Cooperative Supply Point</option>
+                    <option value="Gurugram Agro Mart">15. Gurugram Regional Agri Hub</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Section Title -->
+        <div class="mb-6 flex justify-between items-center">
+            <h2 class="text-2xl font-black text-agriDark">Available Agri-Inputs & Equipment (<span id="itemCount">15</span> Items)</h2>
+            <span class="text-xs text-gray-500 font-semibold bg-gray-200 px-3 py-1 rounded-full">Subsidized Rates via FPO</span>
+        </div>
+
+        <!-- Product Grid (15 Varied Items) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- 1 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-semibold">Fertilizer</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">IFFCO Urea (45kg Bag)</h3>
+                    <p class="text-gray-500 text-sm mt-2">High-grade nitrogen fertilizer essential for rapid vegetative crop growth.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹268 <span class="text-xs text-gray-400 font-normal">/ bag</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('IFFCO Urea (45kg)', 268)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-semibold">Seeds</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Certified Wheat Seeds (HD-2967)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Disease-resistant, high-yielding foundation seeds certified by board.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹1,250 <span class="text-xs text-gray-400 font-normal">/ 40kg</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Certified Wheat Seeds (HD-2967)', 1250)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full font-semibold">Equipment</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Knapsack Manual Sprayer</h3>
+                    <p class="text-gray-500 text-sm mt-2">Durable 16-liter heavy-duty pesticide pump with adjustable brass nozzles.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹1,499 <span class="text-xs text-gray-400 font-normal">/ piece</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Knapsack Manual Sprayer', 1499)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-semibold">Fertilizer</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">DAP Fertilizer (50kg Bag)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Diammonium phosphate rich in phosphorus for robust root development.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹1,350 <span class="text-xs text-gray-400 font-normal">/ bag</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('DAP Fertilizer (50kg)', 1350)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-semibold">Seeds</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Hybrid Paddy Seeds (Basmati 1121)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Premium long-grain aromatic rice seeds with high export demand.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹2,100 <span class="text-xs text-gray-400 font-normal">/ 30kg</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Basmati 1121 Paddy Seeds', 2100)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-semibold">Organic</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Vermicompost Organic Manure (50kg)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Natural earthworm compost to restore soil fertility and microbial health.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹450 <span class="text-xs text-gray-400 font-normal">/ bag</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Vermicompost Manure (50kg)', 450)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-semibold">Seeds</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Mustard Seeds (Pusa Bold)</h3>
+                    <p class="text-gray-500 text-sm mt-2">High oil-content mustard seeds suited for rabi season sowing.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹620 <span class="text-xs text-gray-400 font-normal">/ 5kg pack</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Mustard Seeds Pusa Bold', 620)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-semibold">Fertilizer</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">NPK 19:19:19 Soluble Fertilizer</h3>
+                    <p class="text-gray-500 text-sm mt-2">Balanced water-soluble fertilizer for foliage spray and drip irrigation.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹180 <span class="text-xs text-gray-400 font-normal">/ kg</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('NPK 19:19:19 (1kg)', 180)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full font-semibold">Protection</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Organic Neem Oil Pesticide (5L)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Eco-friendly broad-spectrum pest repellent without toxic residues.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹850 <span class="text-xs text-gray-400 font-normal">/ jerry can</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Organic Neem Oil (5L)', 850)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-semibold">Tools</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Heavy-Duty Cultivator Blade</h3>
+                    <p class="text-gray-500 text-sm mt-2">Forge-hardened steel replacement tines for tractor-mounted cultivators.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹450 <span class="text-xs text-gray-400 font-normal">/ piece</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Cultivator Blade', 450)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-semibold">Seeds</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Hybrid Maize (Corn) Seeds</h3>
+                    <p class="text-gray-500 text-sm mt-2">High-cob weight yellow corn seeds resistant to common stalk rots.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹920 <span class="text-xs text-gray-400 font-normal">/ 4kg pack</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Hybrid Maize Seeds', 920)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-semibold">Fertilizer</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Zinc Sulphate (33% Monohydrate)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Micronutrient supplement to cure zinc deficiency in paddy and cereal crops.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹110 <span class="text-xs text-gray-400 font-normal">/ 5kg pack</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Zinc Sulphate (5kg)', 110)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-semibold">Tools</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Drip Irrigation Pipe Kit (100m)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Water-conserving lateral pipes with built-in drippers for field crops.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹2,400 <span class="text-xs text-gray-400 font-normal">/ roll</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Drip Irrigation Kit (100m)', 2400)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-1 rounded-full font-semibold">Seeds</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Certified Cotton Seeds (Bt Cotton)</h3>
+                    <p class="text-gray-500 text-sm mt-2">Bollworm-resistant genetically superior cotton planting seeds.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹760 <span class="text-xs text-gray-400 font-normal">/ packet</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Bt Cotton Seeds', 760)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 15 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                <div class="p-6">
+                    <span class="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-semibold">Tools</span>
+                    <h3 class="text-xl font-bold text-agriDark mt-4">Solar Water Pump Controller Kit</h3>
+                    <p class="text-gray-500 text-sm mt-2">Automated solar inverter and controller box for tube-well pumps.</p>
+                    <div class="mt-5 text-2xl font-black text-agriGreen">₹8,500 <span class="text-xs text-gray-400 font-normal">/ complete set</span></div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <button onclick="buyItem('Solar Pump Controller Kit', 8500)" class="w-full bg-agriGreen hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition shadow">Buy Now</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JavaScript for Dynamic Store Selection & Purchase -->
+    <script>
+        function buyItem(itemName, price) {
+            const selectedStore = document.getElementById('storeSelect').value;
+            alert('Order Confirmed!\n\nItem: ' + itemName + '\nPrice: ₹' + price + '\nFulfilled By: ' + selectedStore + '\n\nYour order has been successfully routed to the selected FPO store. Delivery will reach your village address within 48 hours via Kisan Credit Card or COD.');
+        }
+    </script>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,pa,gu,bn,mr,ta,te,kn,ml,or,ur,as,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
