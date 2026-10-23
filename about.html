@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - AgriMinds</title>
+  <meta name="description" content="Learn about Team AgriMinds, our vision, three core pillars, tech stack, and future development roadmap.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .about-container {
+      max-width: 950px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .about-hero {
+      background: var(--bg-white);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+
+    .about-hero h2 {
+      color: var(--primary-dark);
+      margin-bottom: 0.75rem;
+      font-size: 2rem;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-card {
+      background: var(--bg-white);
+      padding: 1.75rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+    }
+
+    .about-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .team-member {
+      background: var(--primary-light);
+      border: 1px solid var(--primary);
+      padding: 1rem;
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .team-member strong {
+      color: var(--primary-dark);
+      display: block;
+    }
+
+    .tech-pill {
+      display: inline-block;
+      background: #e9ecef;
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 4px 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="about-container">
+      <div class="about-hero">
+        <h2>About AgriMinds</h2>
+        <p style="font-size: 1.05rem; color: var(--text-muted); line-height: 1.7;">
+          AgriMinds is a Smart India Hackathon 2026 prototype designed to address one of Indian agriculture's most pressing logistical challenges: <strong>excessive mandi wait times and opaque procurement processes</strong>.
+        </p>
+      </div>
+
+      <div class="grid-2col">
+        <div class="about-card">
+          <h3>The Problem</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Farmers routinely wait 6 to 12 hours in physical queues at agricultural procurement centers without real-time updates, clear price guarantees, or digitised gate entries.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3>Our Solution</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            A lightweight, 3-pillar digital platform combining <strong>Digital Slot Booking</strong>, <strong>Real-Time Queue Tracking</strong>, and <strong>100% Verified MSP Transparency</strong>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Team Section -->
+      <div class="about-card" style="margin-bottom: 2rem;">
+        <h3>Team AgriMinds</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+          First-Year Computer Science Engineering Students | <strong>Maharaja Agrasen University, Kalujhanda, Baddi (Himachal Pradesh)</strong>
+        </p>
+        <div class="team-grid">
+          <div class="team-member"><strong>Vedant Jha</strong><span>Developer & Lead</span></div>
+          <div class="team-member"><strong>Shruti</strong><span>UI/UX Designer</span></div>
+          <div class="team-member"><strong>Sparsh</strong><span>QA & Testing</span></div>
+          <div class="team-member"><strong>Pranjal Yadav</strong><span>Data & Content</span></div>
+          <div class="team-member"><strong>Nandani</strong><span>Frontend Dev</span></div>
+          <div class="team-member"><strong>Rachit</strong><span>Research & Pitch</span></div>
+        </div>
+      </div>
+
+      <!-- Tech Stack & Roadmap -->
+      <div class="grid-2col">
+        <div class="about-card">
+          <h3>Tech Stack (Static Web)</h3>
+          <div style="margin-top: 0.5rem;">
+            <span class="tech-pill">HTML5</span>
+            <span class="tech-pill">CSS3 (Variables)</span>
+            <span class="tech-pill">Vanilla JavaScript (ES6)</span>
+            <span class="tech-pill">Browser LocalStorage</span>
+            <span class="tech-pill">GitHub Pages</span>
+            <span class="tech-pill">QRCodeJS CDN</span>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <h3>Future Expansion Roadmap</h3>
+          <ul style="padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-muted);">
+            <li>SMS Gateway Integration (Local language alerts)</li>
+            <li>Direct Bank Account Payout API Integration</li>
+            <li>e-NAM (National Agriculture Market) Portal Sync</li>
+            <li>PWA Offline Support for Low Connectivity Areas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+</body>
+</html>

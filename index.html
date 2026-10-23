@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriMinds - Smart Procurement & Queue Management System</title>
+  <meta name="description" content="Eliminating mandi wait times with digital slot booking, real-time queue tracking, and MSP transparency for Indian farmers.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Specific Home Styles */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-light) 0%, #FFFFFF 100%);
+      padding: 4rem 5%;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background-color: var(--accent-light);
+      color: #8A6A00;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--accent);
+    }
+
+    .hero h1 {
+      font-size: 2.75rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 750px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .section-padding {
+      padding: 4rem 5%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .pillar-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .pillar-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-card h3 {
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Workflow Steps */
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background-color: var(--accent);
+      color: #111;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    /* Problem vs Solution */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .comparison-table th, .comparison-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .comparison-table th {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .comparison-table tr:hover {
+      background-color: var(--primary-light);
+    }
+
+    /* FAQ Accordion */
+    .faq-item {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-white);
+    }
+
+    .faq-answer {
+      padding: 0 1.25rem 1.25rem;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-item.active .faq-question {
+      color: var(--primary);
+    }
+
+    /* Stats Banner */
+    .stats-banner {
+      background: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 3rem 5%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .stat-box h3 {
+      font-size: 2.25rem;
+      color: var(--accent);
+    }
+
+    .stat-box p {
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Layout (Navbar & Banner) injected by common.js -->
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <span class="hero-badge">Smart India Hackathon 2026 Prototype</span>
+      <h1 id="heroTitle">Zero Wait. Full Transparency.</h1>
+      <p id="heroSub">Revolutionizing Mandi procurement for farmers with digital token booking, live queue updates, and official MSP earnings transparency.</p>
+      <div class="hero-cta">
+        <a href="slot.html" class="btn btn-primary" style="padding: 0.75rem 1.75rem; font-size: 1.05rem;">Book Procurement Slot</a>
+        <a href="queue.html" class="btn btn-outline" style="padding: 0.75rem 1.75rem; font-size: 1.05rem;">Check Live Queue</a>
+      </div>
+    </section>
+
+    <!-- 3 Pillars Section -->
+    <section class="section-padding">
+      <div class="section-title">
+        <h2>Key Pillars of AgriMinds</h2>
+        <p>Built specifically to empower farmers and eliminate delays at procurement centers.</p>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">📅</div>
+          <h3>1. Digital Slot Booking</h3>
+          <p>Book guaranteed procurement slots in advance for your specific Mandi, crop, and quantity without standing in long overnight queues.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">⏳</div>
+          <h3>2. Live Queue Tracking</h3>
+          <p>Get real-time updates on your queue position, tokens currently being processed, and accurate estimated wait times directly on your phone.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">⚖️</div>
+          <h3>3. Transparent MSP Rates</h3>
+          <p>Access verified Kharif and Rabi MSP rates (source: PIB / DA&FW) along with an intuitive net earnings calculator with zero hidden deductions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section-padding" style="background-color: var(--bg-white);">
+      <div class="section-title">
+        <h2>How It Works</h2>
+        <p>Four simple steps to a hassle-free procurement experience.</p>
+      </div>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h4>Register / Login</h4>
+          <p>Sign up with your mobile number and select your local district and village.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h4>Book Your Slot</h4>
+          <p>Choose your nearest Mandi, crop type, crop quantity, and convenient time slot.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h4>Get Digital Receipt</h4>
+          <p>Receive an instant QR code token with your allocated time and gate details.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h4>Arrive & Sell</h4>
+          <p>Track your token live, arrive right on time, verify QR at gate, and sell seamlessly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem vs Solution -->
+    <section class="section-padding">
+      <div class="section-title">
+        <h2>Why AgriMinds?</h2>
+        <p>Comparing traditional Mandi procurement with the AgriMinds system.</p>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Traditional Mandi Queue</th>
+              <th>AgriMinds Digital System</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Wait Time</strong></td>
+              <td>6 to 12 Hours in line</td>
+              <td>Zero Line Wait (Slot-based entry)</td>
+            </tr>
+            <tr>
+              <td><strong>Price Information</strong></td>
+              <td>Opaque / Unclear rates</td>
+              <td>100% Verified Government MSP</td>
+            </tr>
+            <tr>
+              <td><strong>Status Updates</strong></td>
+              <td>No visibility on progress</td>
+              <td>Real-time live queue tracking on phone</td>
+            </tr>
+            <tr>
+              <td><strong>Receipts & Verification</strong></td>
+              <td>Paper slips prone to loss</td>
+              <td>Instant digital QR token & downloadable receipt</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Key Metrics / Stats -->
+    <section class="stats-banner">
+      <div class="stat-box">
+        <h3>80%+</h3>
+        <p>Target Reduction in Mandi Wait Time</p>
+      </div>
+      <div class="stat-box">
+        <h3>25+</h3>
+        <p>Demo Mandiyan Covered across HP & Punjab</p>
+      </div>
+      <div class="stat-box">
+        <h3>100%</h3>
+        <p>Official MSP Transparency & Price Guarantee</p>
+      </div>
+      <div class="stat-box">
+        <h3>0</h3>
+        <p>Paper Loss with Digital QR Receipts</p>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-padding">
+      <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Common questions about booking procurement slots.</p>
+      </div>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Is AgriMinds an official government portal?</span>
+            <span>▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>No, AgriMinds is a prototype built for Smart India Hackathon 2026 by Team AgriMinds (Maharaja Agrasen University). All data presented here is for simulation and demonstration purposes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>How do I book a procurement slot?</span>
+            <span>▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Simply navigate to the 'Book Slot' page, select your Mandi, crop type, quantity, and preferred date and time. An instant QR token will be generated for you.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>What happens if I miss my time slot?</span>
+            <span>▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>You can view and manage your booked slots under 'My Bookings'. If needed, you can cancel an upcoming slot and rebook for a later date or time slot.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    function toggleFaq(element) {
+      const item = element.parentElement;
+      item.classList.toggle("active");
+    }
+  </script>
+</body>
+</html>

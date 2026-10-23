@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSP Rates & Earnings Calculator - AgriMinds</title>
+  <meta name="description" content="Official Minimum Support Price (MSP) rates for Kharif and Rabi crops with interactive net earnings calculator.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .msp-container {
+      max-width: 1000px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .msp-header {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .msp-header h2 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .season-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .season-tab {
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: var(--transition);
+    }
+
+    .season-tab.active {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .msp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .msp-table th, .msp-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .msp-table th {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .calc-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      margin-top: 2.5rem;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .calc-result-box {
+      background: var(--primary-light);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .calc-result-box h3 {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      margin-top: 0.25rem;
+    }
+
+    .source-tag {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    .frp-box {
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="msp-container">
+      <div class="msp-header">
+        <h2>Transparent MSP Rates & Earnings Calculator</h2>
+        <p style="color: var(--text-muted);">Official Minimum Support Prices approved by the Government of India for procurement seasons.</p>
+        <div class="source-tag">Source: Cabinet decisions via PIB / DA&FW | Last verified: October 2026</div>
+      </div>
+
+      <!-- Sugarcane FRP Banner -->
+      <div class="frp-box">
+        <h4 style="color: #8A6A00; margin-bottom: 0.25rem;">Sugarcane Fair & Remunerative Price (FRP)</h4>
+        <p style="font-size: 0.9rem; color: #555;">Sugarcane is governed by FRP (Fair & Remunerative Price) rather than MSP. Statutory rates apply per quintal based on sugar recovery % at local sugar mills.</p>
+      </div>
+
+      <!-- Season Tabs -->
+      <div class="season-tabs">
+        <div class="season-tab active" onclick="switchSeason('Kharif', this)">Kharif 2026-27 (Current Procurement)</div>
+        <div class="season-tab" onclick="switchSeason('Rabi', this)">Rabi 2027-28 (Latest Announced)</div>
+      </div>
+
+      <!-- MSP Table -->
+      <div style="overflow-x: auto;">
+        <table class="msp-table">
+          <thead>
+            <tr id="tableHeader">
+              <th>Crop Name / फसल</th>
+              <th>MSP Rate (₹ / Quintal)</th>
+            </tr>
+          </thead>
+          <tbody id="mspTableBody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Non-MSP Note -->
+      <div style="background: #e9ecef; padding: 1rem; border-radius: var(--radius); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">
+        * Note: Vegetables like Potato, Tomato, Onion, and Green Peas do not have a statutory MSP. They are traded at indicative open market rates.
+      </div>
+
+      <!-- Earnings Calculator -->
+      <div class="calc-card">
+        <h3 style="color: var(--primary-dark);">Net Earnings Calculator / कमाई कैलकुलेटर</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Calculate estimated gross payout and net earnings after optional deductions.</p>
+
+        <form id="calcForm" onsubmit="calculateEarnings(event)">
+          <div class="calc-grid">
+            <div class="form-group">
+              <label for="calcCrop">Select Crop *</label>
+              <select id="calcCrop" class="form-control" onchange="updateCropRateDisplay()" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="calcQty">Quantity (Quintals) *</label>
+              <input type="number" id="calcQty" class="form-control" placeholder="e.g. 50" min="1" max="1000" oninput="calculateEarnings()" required>
+            </div>
+
+            <div class="form-group">
+              <label for="calcTransport">Transport Cost (₹ total, optional)</label>
+              <input type="number" id="calcTransport" class="form-control" placeholder="0" min="0" value="0" oninput="calculateEarnings()">
+            </div>
+
+            <div class="form-group">
+              <label for="calcMoisture">Moisture Deduction (₹/quintal, optional)</label>
+              <input type="number" id="calcMoisture" class="form-control" placeholder="0" min="0" value="0" oninput="calculateEarnings()">
+            </div>
+          </div>
+        </form>
+
+        <div class="calc-result-box">
+          <div style="font-size: 0.9rem; color: var(--text-muted);">Estimated Net Payable Amount</div>
+          <h3 id="netPayout">₹0</h3>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;" id="calcBreakdown">Gross Value: ₹0 | Total Deductions: ₹0</div>
+        </div>
+
+        <p class="source-tag" style="text-align: center; margin-top: 1rem;">Disclaimer: Estimate only. Final payout is subject to quality inspection at the procurement center.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/msp.js"></script>
+</body>
+</html>

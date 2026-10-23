@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="100%" height="100%">
+  <g transform="translate(10, 10)">
+    <!-- Outer Trust Circle -->
+    <circle cx="50" cy="50" r="45" fill="none" stroke="#1A6B3C" stroke-width="6" />
+    <!-- Wheat Stalks (Left) -->
+    <path d="M35 75 Q30 55 35 30 Q40 45 35 75 Z" fill="#D4A017" />
+    <path d="M28 50 Q22 40 28 25 Q32 35 28 50 Z" fill="#D4A017" />
+    <path d="M45 60 Q40 45 45 25 Q50 35 45 60 Z" fill="#D4A017" />
+    <!-- Tech Node / Profile (Right) -->
+    <path d="M50 25 L65 35 L65 50 C65 65 55 75 50 78" fill="none" stroke="#1A6B3C" stroke-width="5" stroke-linecap="round" />
+    <circle cx="65" cy="35" r="3" fill="#1A6B3C" />
+    <circle cx="65" cy="50" r="3" fill="#1A6B3C" />
+    <!-- Circuit Lines -->
+    <path d="M50 35 L45 35 L40 40" fill="none" stroke="#D4A017" stroke-width="3" stroke-linecap="round" />
+    <circle cx="40" cy="40" r="3" fill="#D4A017" />
+    <path d="M50 48 L44 48 L38 53" fill="none" stroke="#D4A017" stroke-width="3" stroke-linecap="round" />
+    <circle cx="38" cy="53" r="3" fill="#D4A017" />
+    <!-- Base Fields -->
+    <path d="M20 78 Q50 68 80 78 L78 85 Q50 75 22 85 Z" fill="#1A6B3C" />
+    <!-- Typography -->
+    <text x="115" y="55" font-family="Poppins, sans-serif" font-weight="700" font-size="42" fill="#1A6B3C">Agri<tspan fill="#D4A017">minds</tspan></text>
+    <text x="117" y="80" font-family="Poppins, sans-serif" font-weight="500" font-size="13" fill="#555" letter-spacing="2">ZERO WAIT. FULL TRANSPARENCY.</text>
+  </g>
+</svg>

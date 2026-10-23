@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Login & Registration - AgriMinds</title>
+  <meta name="description" content="Register or login to book procurement slots and track mandi queues on AgriMinds.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .auth-container {
+      max-width: 480px;
+      margin: 3rem auto;
+      background: var(--bg-white);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: var(--transition);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+
+    .auth-tab.active {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      outline: none;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .otp-box {
+      background: var(--accent-light);
+      border: 1px dashed var(--accent);
+      padding: 1rem;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .otp-code {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--primary-dark);
+      margin: 0.5rem 0;
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="auth-container">
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tabLoginBtn" onclick="switchAuthTab('login')">Login / लॉगिन</div>
+        <div class="auth-tab" id="tabRegisterBtn" onclick="switchAuthTab('register')">Register / पंजीकरण</div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="loginMobile">Mobile Number / मोबाइल नंबर *</label>
+          <input type="tel" id="loginMobile" class="form-control" placeholder="10-digit mobile number" maxlength="10" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password / पासवर्ड *</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem;">Login to AgriMinds</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label for="regName">Full Name / पूरा नाम *</label>
+          <input type="text" id="regName" class="form-control" placeholder="e.g. Ramesh Kumar" required>
+        </div>
+        <div class="form-group">
+          <label for="regMobile">Mobile Number / मोबाइल नंबर *</label>
+          <input type="tel" id="regMobile" class="form-control" placeholder="10-digit mobile number (6-9 starting)" maxlength="10" required>
+        </div>
+        <div class="form-group">
+          <label for="regDistrict">District / जिला *</label>
+          <input type="text" id="regDistrict" class="form-control" placeholder="e.g. Panchkula / Patiala" required>
+        </div>
+        <div class="form-group">
+          <label for="regVillage">Village / गाँव *</label>
+          <input type="text" id="regVillage" class="form-control" placeholder="e.g. Majra Mehtab" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Create Password / नया पासवर्ड *</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="Min 6 characters" minlength="6" required>
+        </div>
+
+        <!-- Simulated OTP Step -->
+        <div id="otpSection" style="display: none;">
+          <div class="otp-box">
+            <span style="font-size: 0.85rem; color: #666;">SIMULATED OTP DEMO</span>
+            <div class="otp-code">123456</div>
+            <p style="font-size: 0.8rem;">Enter the 6-digit Demo OTP code below to verify.</p>
+          </div>
+          <div class="form-group">
+            <label for="otpInput">Enter OTP / ओटीपी दर्ज करें *</label>
+            <input type="text" id="otpInput" class="form-control" placeholder="123456" maxlength="6">
+          </div>
+        </div>
+
+        <button type="button" id="getOtpBtn" class="btn btn-accent" style="width: 100%; padding: 0.8rem; margin-bottom: 0.5rem;" onclick="generateDemoOtp()">Get Verification OTP</button>
+        <button type="submit" id="regSubmitBtn" class="btn btn-primary" style="width: 100%; padding: 0.8rem; display: none;">Verify & Complete Registration</button>
+        
+        <p class="form-note">* Passwords are hashed locally for simulation. No real SMS charges apply.</p>
+      </form>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

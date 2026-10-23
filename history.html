@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings - AgriMinds</title>
+  <meta name="description" content="View, manage, download, or cancel your booked mandi procurement slots.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- QR Code Generator CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .history-container {
+      max-width: 850px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .status-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .status-tab {
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: var(--transition);
+    }
+
+    .status-tab.active {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .booking-card {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .booking-info h4 {
+      color: var(--primary-dark);
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .booking-details {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .booking-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge-upcoming { background: var(--primary-light); color: var(--primary); }
+    .badge-completed { background: #d4edda; color: #155724; }
+    .badge-cancelled { background: #f8d7da; color: #721c24; }
+
+    .booking-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border-color);
+    }
+
+    /* Modal Styling */
+    #receiptModal, #cancelModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: white;
+      max-width: 450px;
+      width: 100%;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="history-container">
+      <div class="history-header">
+        <div>
+          <h2 style="color: var(--primary-dark);">My Procurement Bookings</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Manage your scheduled slots, receipts, and token status.</p>
+        </div>
+        <a href="slot.html" class="btn btn-primary">+ Book New Slot</a>
+      </div>
+
+      <div class="status-tabs">
+        <div class="status-tab active" onclick="switchTab('Upcoming', this)">Upcoming Slots</div>
+        <div class="status-tab" onclick="switchTab('Completed', this)">Completed</div>
+        <div class="status-tab" onclick="switchTab('Cancelled', this)">Cancelled</div>
+      </div>
+
+      <div id="bookingsList">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- View Receipt Modal -->
+    <div id="receiptModal">
+      <div class="modal-card">
+        <div style="text-align: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+          <h3 style="color: var(--primary-dark);">AgriMinds - QR Receipt</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Smart India Hackathon 2026 Prototype</p>
+        </div>
+        <div id="modalReceiptDetails"></div>
+        <div id="qrcode" style="display: flex; justify-content: center; margin: 1.5rem 0;"></div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-outline" style="flex: 1;" onclick="window.print()">Print</button>
+          <button class="btn btn-primary" style="flex: 1;" onclick="closeModal('receiptModal')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancel Confirmation Modal -->
+    <div id="cancelModal">
+      <div class="modal-card">
+        <h3 style="color: var(--danger); margin-bottom: 0.5rem;">Cancel Booking?</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Are you sure you want to cancel this procurement slot? This action cannot be undone.</p>
+        <input type="hidden" id="cancelBookingId">
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-outline" style="flex: 1;" onclick="closeModal('cancelModal')">Keep Slot</button>
+          <button class="btn btn-primary" style="flex: 1; background-color: var(--danger);" onclick="confirmCancelBooking()">Yes, Cancel Slot</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html>

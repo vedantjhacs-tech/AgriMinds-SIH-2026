@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Page Not Found - AgriMinds</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .not-found-card {
+      max-width: 500px;
+      margin: 4rem auto;
+      text-align: center;
+      background: var(--bg-white);
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .not-found-card h1 {
+      font-size: 4rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="not-found-card">
+      <h1>404</h1>
+      <h2 style="color: var(--primary-dark); margin-bottom: 0.75rem;">Page Not Found</h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">The page or route you are looking for does not exist or has been moved.</p>
+      <a href="index.html" class="btn btn-primary">Return to Home</a>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+</body>
+</html>

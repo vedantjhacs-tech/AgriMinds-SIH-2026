@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - AgriMinds</title>
+  <meta name="description" content="Get in touch with Team AgriMinds for support or feedback regarding the Smart Procurement System prototype.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .contact-container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .contact-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      outline: none;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="contact-container">
+      <div class="contact-grid">
+        <!-- Info Card -->
+        <div class="contact-card">
+          <h2 style="color: var(--primary-dark); margin-bottom: 1rem;">Contact Support</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+            Have questions about slot bookings or platform feedback? Reach out to Team AgriMinds.
+          </p>
+
+          <div style="margin-bottom: 1rem;">
+            <strong>Email:</strong><br>
+            <span style="color: var(--text-muted);">support.agriminds@example.com</span>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <strong>Helpdesk Helpline:</strong><br>
+            <span style="color: var(--text-muted);">+91 1800-123-AGRI (Demo Helpline)</span>
+          </div>
+
+          <div>
+            <strong>Campus Address:</strong><br>
+            <span style="color: var(--text-muted);">Maharaja Agrasen University, Kalujhanda, Baddi, District Solan, Himachal Pradesh - 174103</span>
+          </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="contact-card">
+          <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">Send Message / संदेश भेजें</h3>
+          <form id="contactForm" onsubmit="handleContactSubmit(event)">
+            <div class="form-group">
+              <label for="contactName">Your Name *</label>
+              <input type="text" id="contactName" class="form-control" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+              <label for="contactMobile">Mobile Number *</label>
+              <input type="tel" id="contactMobile" class="form-control" placeholder="10-digit Mobile" maxlength="10" required>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">Your Query / Feedback *</label>
+              <textarea id="contactMessage" class="form-control" rows="4" placeholder="Write your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

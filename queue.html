@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Queue Tracker - AgriMinds</title>
+  <meta name="description" content="Track real-time mandi procurement queues, now serving tokens, and estimated wait times.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .queue-container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .queue-header-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .queue-header-card h2 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .queue-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-main);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .stat-card .val {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 0.5rem 0;
+    }
+
+    .stat-card .lbl {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .queue-list-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .queue-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .queue-table th, .queue-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .queue-table th {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .badge-serving {
+      background: var(--success);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-waiting {
+      background: var(--warning);
+      color: #111;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="queue-container">
+      <div class="queue-header-card">
+        <div class="live-badge">
+          <span class="live-dot"></span> Simulated Live Queue Feed (SIH 2026)
+        </div>
+        <h2>Real-Time Mandi Queue Tracker</h2>
+        <p style="color: var(--text-muted);">Select your Mandi to monitor live gate counters, currently serving tokens, and estimated wait times.</p>
+
+        <div class="form-group" style="margin-top: 1.5rem; max-width: 400px;">
+          <label for="queueMandiSelect">Select Mandi / मंडी चुनें</label>
+          <select id="queueMandiSelect" class="form-control" onchange="updateQueueView()">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div class="queue-stats-grid">
+          <div class="stat-card">
+            <div class="lbl">Now Serving Token</div>
+            <div class="val" id="nowServingToken">AGM-2026-1042</div>
+          </div>
+          <div class="stat-card">
+            <div class="lbl">Farmers in Queue Ahead</div>
+            <div class="val" id="queueCount">6</div>
+          </div>
+          <div class="stat-card">
+            <div class="lbl">Est. Average Wait Time</div>
+            <div class="val" id="estWaitTime">18 mins</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="queue-list-card">
+        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">Active Queue Status Board</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Tokens currently queued or being processed at the procurement bay.</p>
+
+        <div style="overflow-x: auto;">
+          <table class="queue-table">
+            <thead>
+              <tr>
+                <th>Token ID</th>
+                <th>Farmer Name</th>
+                <th>Crop</th>
+                <th>Quantity</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="queueTableBody">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/queue.js"></script>
+</body>
+</html>
